@@ -4,18 +4,24 @@ const AuthContext = createContext(null);
 
 const DEFAULT_USERS = [
   {
-    name: 'Alex Morgan',
-    email: 'alex.morgan@nature.io',
-    username: 'alexmorgan',
+    name: 'Aryan Prasher',
+    email: 'aryan@naturelearn.io',
+    username: 'aryan',
     password: 'password123',
-    joinedAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-    avatarSeed: 'alex'
+    learningGoal: 'MERN Stack',
+    assessmentStatus: 'Not Completed',
+    overallCompetency: null,
+    joinedAt: new Date().toISOString(),
+    avatarSeed: 'aryan'
   },
   {
-    name: 'Demo Explorer',
-    email: 'demo@nature.io',
+    name: 'Demo Student',
+    email: 'demo@naturelearn.io',
     username: 'demo',
     password: 'password123',
+    learningGoal: 'MERN Stack',
+    assessmentStatus: 'Not Completed',
+    overallCompetency: null,
     joinedAt: new Date().toISOString(),
     avatarSeed: 'demo'
   }
@@ -86,6 +92,9 @@ export function AuthProvider({ children }) {
       name: user.name,
       email: user.email,
       username: user.username,
+      learningGoal: user.learningGoal || 'MERN Stack',
+      assessmentStatus: user.assessmentStatus || 'Not Completed',
+      overallCompetency: user.overallCompetency || null,
       avatarSeed: user.avatarSeed || user.username,
       loginTime: new Date().toISOString()
     };
@@ -121,6 +130,9 @@ export function AuthProvider({ children }) {
       email: cleanEmail,
       username: cleanUsername,
       password: cleanPassword,
+      learningGoal: 'MERN Stack',
+      assessmentStatus: 'Not Completed',
+      overallCompetency: null,
       joinedAt: new Date().toISOString(),
       avatarSeed: cleanUsername
     };
@@ -131,6 +143,9 @@ export function AuthProvider({ children }) {
       name: newUser.name,
       email: newUser.email,
       username: newUser.username,
+      learningGoal: newUser.learningGoal,
+      assessmentStatus: newUser.assessmentStatus,
+      overallCompetency: newUser.overallCompetency,
       avatarSeed: newUser.avatarSeed,
       loginTime: new Date().toISOString()
     };
@@ -138,6 +153,18 @@ export function AuthProvider({ children }) {
     setCurrentUser(sessionUser);
     showToast(`Account created! Welcome, ${newUser.name}!`, 'success');
     return { success: true, user: sessionUser };
+  };
+
+  const setLearningGoal = (goal) => {
+    if (!currentUser) return;
+    const updated = { ...currentUser, learningGoal: goal };
+    setCurrentUser(updated);
+
+    // Update in users registry
+    setUsers(prev =>
+      prev.map(u => (u.username === currentUser.username ? { ...u, learningGoal: goal } : u))
+    );
+    showToast(`Learning goal updated to ${goal}`, 'info');
   };
 
   const logout = () => {
@@ -156,6 +183,7 @@ export function AuthProvider({ children }) {
         login,
         register,
         logout,
+        setLearningGoal,
         toast,
         showToast,
         dismissToast,
