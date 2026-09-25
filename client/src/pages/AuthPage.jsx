@@ -10,42 +10,54 @@ export default function AuthPage({ initialMode = 'login' }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Determine view based on initialMode or URL path
+  // Determine view based on URL path or initialMode
   const [currentView, setCurrentView] = useState(() => {
     if (location.pathname === '/register') return 'signup';
+    if (location.pathname === '/logout') return 'logout';
+    if (location.pathname === '/showcase') return 'showcase';
     if (location.pathname === '/login') return initialMode === 'showcase' ? 'showcase' : 'login';
     return initialMode;
   });
 
-  // If already authenticated and visiting /login or /register, allow them to view or go to dashboard
+  // Keep view in sync if path changes
   useEffect(() => {
-    // If screen shrinks below 840px and in showcase mode, fallback to single view
+    if (location.pathname === '/register') setCurrentView('signup');
+    else if (location.pathname === '/logout') setCurrentView('logout');
+    else if (location.pathname === '/showcase') setCurrentView('showcase');
+    else if (location.pathname === '/login' && currentView !== 'showcase') setCurrentView('login');
+  }, [location.pathname]);
+
+  // Responsive fallback for showcase view on smaller viewports
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 840 && currentView === 'showcase') {
         setCurrentView('login');
+        navigate('/login');
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [currentView]);
+  }, [currentView, navigate]);
 
   const handleLoginSuccess = () => {
-    // Navigate straight to the learning dashboard as required!
-    navigate('/dashboard');
+    setCurrentView('logout');
+    navigate('/logout');
   };
 
   const handleRegisterSuccess = () => {
-    // Navigate straight to the learning dashboard upon account creation
-    navigate('/dashboard');
+    setCurrentView('logout');
+    navigate('/logout');
   };
 
   const handleQuickDemo = () => {
     if (isAuthenticated) {
       logout();
       setCurrentView('login');
+      navigate('/login');
     } else {
       login('demo', 'password123');
-      navigate('/dashboard');
+      setCurrentView('logout');
+      navigate('/logout');
     }
   };
 
@@ -58,10 +70,19 @@ export default function AuthPage({ initialMode = 'login' }) {
 
       {/* Top Floating Control Bar */}
       <header className="app-topbar">
-        <div className="brand-badge" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+        <div
+          className="brand-badge"
+          onClick={() => {
+            setCurrentView('login');
+            navigate('/login');
+          }}
+          style={{ cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+        >
           <span className="brand-sparkle">✦</span>
-          <span className="brand-name">CompetencyAI</span>
-          <span className="brand-tag">Auth Portal</span>
+          <span className="brand-name">Nature Auth</span>
+          <span className="brand-tag">Portal</span>
         </div>
 
         {/* View Switcher Pills */}
@@ -69,8 +90,11 @@ export default function AuthPage({ initialMode = 'login' }) {
           <button
             type="button"
             className={`nav-pill ${currentView === 'showcase' ? 'active' : ''}`}
-            onClick={() => setCurrentView('showcase')}
-            title="View both screens side-by-side as in the inspiration image"
+            onClick={() => {
+              setCurrentView('showcase');
+              navigate('/showcase');
+            }}
+            title="View login and register side-by-side"
           >
             <span className="nav-icon">✨</span>
             <span className="nav-label">Dual Inspo View</span>
@@ -79,7 +103,10 @@ export default function AuthPage({ initialMode = 'login' }) {
           <button
             type="button"
             className={`nav-pill ${currentView === 'login' ? 'active' : ''}`}
-            onClick={() => setCurrentView('login')}
+            onClick={() => {
+              setCurrentView('login');
+              navigate('/login');
+            }}
           >
             <span className="nav-icon">🔑</span>
             <span className="nav-label">Login</span>
@@ -88,23 +115,27 @@ export default function AuthPage({ initialMode = 'login' }) {
           <button
             type="button"
             className={`nav-pill ${currentView === 'signup' ? 'active' : ''}`}
-            onClick={() => setCurrentView('signup')}
+            onClick={() => {
+              setCurrentView('signup');
+              navigate('/register');
+            }}
           >
             <span className="nav-icon">📝</span>
             <span className="nav-label">Sign Up</span>
           </button>
 
-          {isAuthenticated && (
-            <button
-              type="button"
-              className="nav-pill"
-              onClick={() => navigate('/dashboard')}
-              title="Go to Learning Dashboard"
-            >
-              <span className="nav-icon">📊</span>
-              <span className="nav-label">Go to Dashboard</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className={`nav-pill ${currentView === 'logout' ? 'active' : ''}`}
+            onClick={() => {
+              setCurrentView('logout');
+              navigate('/logout');
+            }}
+            title="View session details and logout"
+          >
+            <span className="nav-icon">🚪</span>
+            <span className="nav-label">Session / Logout</span>
+          </button>
         </nav>
 
         {/* Quick Demo Action */}
@@ -123,7 +154,7 @@ export default function AuthPage({ initialMode = 'login' }) {
             ) : (
               <>
                 <span className="flash-icon">⚡</span>
-                <span>One-Click Demo &rarr; Dashboard</span>
+                <span>One-Click Demo &rarr; Sign In</span>
               </>
             )}
           </button>
@@ -158,7 +189,10 @@ export default function AuthPage({ initialMode = 'login' }) {
                 <span>Login Design</span>
               </div>
               <LoginCard
-                onNavigateRegister={() => setCurrentView('signup')}
+                onNavigateRegister={() => {
+                  setCurrentView('signup');
+                  navigate('/register');
+                }}
                 onLoginSuccess={handleLoginSuccess}
               />
             </div>
@@ -169,7 +203,10 @@ export default function AuthPage({ initialMode = 'login' }) {
                 <span>Sign Up Design</span>
               </div>
               <RegisterCard
-                onNavigateLogin={() => setCurrentView('login')}
+                onNavigateLogin={() => {
+                  setCurrentView('login');
+                  navigate('/login');
+                }}
                 onRegisterSuccess={handleRegisterSuccess}
               />
             </div>
@@ -179,7 +216,10 @@ export default function AuthPage({ initialMode = 'login' }) {
         {currentView === 'login' && (
           <div className="single-card-wrapper fade-enter">
             <LoginCard
-              onNavigateRegister={() => setCurrentView('signup')}
+              onNavigateRegister={() => {
+                setCurrentView('signup');
+                navigate('/register');
+              }}
               onLoginSuccess={handleLoginSuccess}
             />
           </div>
@@ -188,7 +228,10 @@ export default function AuthPage({ initialMode = 'login' }) {
         {currentView === 'signup' && (
           <div className="single-card-wrapper fade-enter">
             <RegisterCard
-              onNavigateLogin={() => setCurrentView('login')}
+              onNavigateLogin={() => {
+                setCurrentView('login');
+                navigate('/login');
+              }}
               onRegisterSuccess={handleRegisterSuccess}
             />
           </div>
@@ -197,8 +240,14 @@ export default function AuthPage({ initialMode = 'login' }) {
         {currentView === 'logout' && (
           <div className="single-card-wrapper fade-enter">
             <LogoutCard
-              onNavigateLogin={() => setCurrentView('login')}
-              onNavigateRegister={() => setCurrentView('signup')}
+              onNavigateLogin={() => {
+                setCurrentView('login');
+                navigate('/login');
+              }}
+              onNavigateRegister={() => {
+                setCurrentView('signup');
+                navigate('/register');
+              }}
             />
           </div>
         )}
@@ -207,7 +256,7 @@ export default function AuthPage({ initialMode = 'login' }) {
       {/* Footer bar */}
       <footer className="portal-footer">
         <p>
-          AI-Enabled Learning Platform &bull; Competency Gaps &bull; Personalized Training
+          Nature Inspo Portal &bull; Secure Authentication &bull; Login, Register &amp; Logout
         </p>
       </footer>
     </div>
