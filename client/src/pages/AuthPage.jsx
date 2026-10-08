@@ -24,14 +24,19 @@ export default function AuthPage({ initialMode = 'login' }) {
     else setCurrentView('login');
   }, [location.pathname]);
 
+  // Automatically redirect authenticated user to main portal if on /login or /register
+  useEffect(() => {
+    if (isAuthenticated && (location.pathname === '/login' || location.pathname === '/register')) {
+      navigate('/skills', { replace: true });
+    }
+  }, [isAuthenticated, location.pathname, navigate]);
+
   const handleLoginSuccess = () => {
-    setCurrentView('logout');
-    navigate('/logout');
+    navigate('/skills');
   };
 
   const handleRegisterSuccess = () => {
-    setCurrentView('logout');
-    navigate('/logout');
+    navigate('/skills');
   };
 
   const handleSignOut = () => {

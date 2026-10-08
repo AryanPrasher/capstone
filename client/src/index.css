@@ -358,12 +358,10 @@ button, input {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 38px 20px;
+  padding: 14px 20px 8px 20px;
   position: relative;
   z-index: 10;
 }
-
-
 
 .single-card-wrapper {
   display: flex;
@@ -388,15 +386,15 @@ button, input {
 
 /* ==========================================================================
    Inspo Mobile Card Frame
-   Exact replica of the inspo/login insppo.webp card geometry
+   Optimized natural height to eliminate excessive empty space at footer
    ========================================================================== */
 
 .inspo-card {
   width: 375px;
   max-width: 100%;
-  min-height: 690px;
+  min-height: auto;
   background: var(--card-bg);
-  border-radius: 40px;
+  border-radius: 36px;
   box-shadow: var(--card-shadow);
   position: relative;
   overflow: hidden;
@@ -406,8 +404,8 @@ button, input {
 }
 
 .inspo-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 30px 70px -15px rgba(25, 10, 48, 0.3), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 60px -12px rgba(25, 10, 48, 0.28), 0 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
 /* ==========================================================================
@@ -417,7 +415,7 @@ button, input {
 .wave-header-container {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 180px;
   overflow: hidden;
 }
 
@@ -432,8 +430,8 @@ button, input {
 
 .wave-header-text {
   position: absolute;
-  top: 36px;
-  left: 32px;
+  top: 28px;
+  left: 30px;
   z-index: 5;
 }
 
@@ -450,7 +448,7 @@ button, input {
    ========================================================================== */
 
 .card-body {
-  padding: 10px 32px 30px 32px;
+  padding: 8px 28px 18px 28px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -459,12 +457,12 @@ button, input {
 }
 
 .title-section {
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 
 .auth-title {
   font-family: var(--font-primary);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
   color: #1d1830;
   letter-spacing: -0.03em;
@@ -483,7 +481,7 @@ button, input {
 .pill-input-group {
   position: relative;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 11px;
 }
 
 .pill-input {
@@ -611,7 +609,7 @@ button, input {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 14px 0 16px 0;
+  margin: 10px 0 12px 0;
 }
 
 .divider-line {
@@ -621,7 +619,7 @@ button, input {
 }
 
 .divider-text {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #726c85;
 }
@@ -634,13 +632,13 @@ button, input {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
-  margin-bottom: 24px;
+  gap: 18px;
+  margin-bottom: 12px;
 }
 
 .social-round-btn {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #ffffff;
   border: none;
@@ -653,8 +651,8 @@ button, input {
 }
 
 .social-round-btn:hover {
-  transform: translateY(-2.5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .social-round-btn:active {
@@ -667,10 +665,11 @@ button, input {
 
 .auth-footer-nav {
   text-align: center;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #4b465a;
-  margin-top: auto;
+  margin-top: 4px;
   padding-top: 8px;
+  border-top: 1px solid rgba(76, 20, 140, 0.08);
 }
 
 .footer-prompt {
@@ -698,15 +697,15 @@ button, input {
    ========================================================================== */
 
 .signup-inspo-card {
-  min-height: 720px;
+  min-height: auto;
 }
 
 .signup-top-wave {
   position: absolute;
   top: 0;
   right: 0;
-  width: 170px;
-  height: 140px;
+  width: 160px;
+  height: 130px;
   z-index: 1;
   pointer-events: none;
 }
@@ -718,13 +717,13 @@ button, input {
 }
 
 .signup-card-body {
-  padding: 38px 32px 10px 32px;
+  padding: 24px 28px 4px 28px;
   position: relative;
   z-index: 3;
 }
 
 .signup-header-section {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .auth-subtitle {
@@ -841,15 +840,15 @@ button, input {
 }
 
 .alt-nav {
-  margin-top: 14px;
+  margin-top: 8px;
 }
 
 /* Bottom Wave & Brand Messaging */
 .signup-bottom-wave-container {
   position: relative;
   width: 100%;
-  height: 200px;
-  margin-top: auto;
+  height: 130px;
+  margin-top: 8px;
   overflow: hidden;
   z-index: 1;
 }
@@ -865,8 +864,8 @@ button, input {
 
 .bottom-wave-branding {
   position: absolute;
-  bottom: 30px;
-  left: 32px;
+  bottom: 18px;
+  left: 28px;
   z-index: 5;
   color: #ffffff;
 }
@@ -891,15 +890,15 @@ button, input {
    ========================================================================== */
 
 .logout-inspo-card {
-  min-height: 690px;
+  min-height: auto;
 }
 
 .logout-wave-header {
-  height: 170px;
+  height: 140px;
 }
 
 .logout-body {
-  padding-top: 0;
+  padding: 0 28px 12px 28px;
   text-align: center;
   align-items: center;
 }
@@ -908,7 +907,7 @@ button, input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .avatar-ring-container {
@@ -1074,8 +1073,8 @@ button, input {
 .logout-bottom-wave-container {
   position: relative;
   width: 100%;
-  height: 80px;
-  margin-top: auto;
+  height: 60px;
+  margin-top: 8px;
   overflow: hidden;
 }
 
@@ -1291,9 +1290,15 @@ button, input {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 18px 24px;
-  font-size: 12px;
-  color: #706b83;
+  padding: 6px 20px 12px 20px;
+  font-size: 11.5px;
+  color: #746e86;
+  margin-top: auto;
+}
+
+.portal-footer p {
+  margin: 0;
+  line-height: 1.4;
 }
 
 .portal-footer code {
@@ -1318,17 +1323,15 @@ button, input {
     display: none;
   }
 
-
-
   .cards-stage-container {
-    padding: 24px 14px;
+    padding: 14px 12px 6px 12px;
   }
 }
 
 @media (max-width: 440px) {
   .inspo-card {
-    border-radius: 32px;
-    min-height: 640px;
+    border-radius: 28px;
+    min-height: auto;
   }
 
   .card-body, .signup-card-body {
@@ -1371,12 +1374,12 @@ button, input {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 30px 24px 60px 24px;
+  padding: 24px 24px 16px 24px;
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
 }
 
 /* Hero Banner */
