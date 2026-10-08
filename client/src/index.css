@@ -153,15 +153,7 @@ button, input {
   border-radius: 9999px;
 }
 
-.view-switcher-nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #edf1f7;
-  padding: 4px;
-  border-radius: 9999px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
+
 
 .nav-pill {
   display: inline-flex;
@@ -189,16 +181,7 @@ button, input {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-.auth-indicator-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  position: absolute;
-  top: 7px;
-  right: 8px;
-  box-shadow: 0 0 6px #10b981;
-}
+
 
 .topbar-actions {
   display: flex;
@@ -380,44 +363,7 @@ button, input {
   z-index: 10;
 }
 
-.showcase-dual-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: wrap;
-  max-width: 1000px;
-  margin: 0 auto;
-}
 
-.showcase-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.column-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #4b465a;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 4px 12px;
-  border-radius: 9999px;
-  backdrop-filter: blur(8px);
-}
-
-.label-badge {
-  background: var(--purple-800);
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 9999px;
-}
 
 .single-card-wrapper {
   display: flex;
@@ -1372,9 +1318,7 @@ button, input {
     display: none;
   }
 
-  .showcase-dual-wrapper {
-    gap: 30px;
-  }
+
 
   .cards-stage-container {
     padding: 24px 14px;
