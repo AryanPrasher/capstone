@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
+  const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [sessionSeconds, setSessionSeconds] = useState(128);
@@ -30,9 +32,9 @@ export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
 
   // Fallback if accessed without an active session
   const activeUser = currentUser || {
-    name: 'Explorer Guest',
-    username: 'guest_user',
-    email: 'guest@nature.io'
+    name: 'Student Candidate',
+    username: 'student',
+    email: 'student@skillsync.edu'
   };
 
   const userInitial = (activeUser.name || 'U').charAt(0).toUpperCase();
@@ -91,6 +93,20 @@ export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
 
           <h1 className="auth-title profile-name">{activeUser.name}</h1>
           <p className="profile-username">@{activeUser.username}</p>
+          <div className="profile-tags-row">
+            <span className="profile-role-badge">
+              {activeUser.role === 'institution_tpo'
+                ? '🏛️ Academic TPO'
+                : activeUser.role === 'industry_recruiter'
+                ? '💼 Industry Recruiter'
+                : '🎓 Student Scholar'}
+            </span>
+            {(activeUser.organizationName || activeUser.institutionName) && (
+              <span className="profile-org-badge">
+                {activeUser.organizationName || activeUser.institutionName}
+              </span>
+            )}
+          </div>
           <span className="profile-email-badge">{activeUser.email}</span>
         </div>
 
@@ -111,11 +127,21 @@ export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
           Ready to step away? Your preferences and saved settings are stored securely.
         </p>
 
-        {/* Primary Action Button: Sign Out */}
+        {/* Action 1: Open Phase 2 Skill Mapping Engine */}
+        <button
+          type="button"
+          className="pill-submit-btn skill-engine-cta-btn"
+          onClick={() => navigate('/skills')}
+          style={{ marginBottom: '12px' }}
+        >
+          <span>🎯 Launch Skill Mapping Engine &rarr;</span>
+        </button>
+
+        {/* Action 2: Sign Out */}
         <button
           id="logout-submit-btn"
           type="button"
-          className="pill-submit-btn logout-action-btn"
+          className="pill-secondary-btn logout-action-btn"
           onClick={handleLogout}
           disabled={isLoggingOut}
         >
@@ -131,15 +157,6 @@ export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
               <span>Sign Out</span>
             </>
           )}
-        </button>
-
-        {/* Secondary Action: Keep Me Signed In / Return to Portal */}
-        <button
-          type="button"
-          className="pill-secondary-btn"
-          onClick={onNavigateLogin}
-        >
-          Keep Me Signed In
         </button>
 
         {/* Footer Navigation */}
@@ -168,7 +185,7 @@ export default function LogoutCard({ onNavigateLogin, onNavigateRegister }) {
             fill="url(#purpleGradLogout)"
           />
         </svg>
-        <p className="logout-peace-text">Nature will remember your footsteps</p>
+        <p className="logout-peace-text">Academia-Industry Collaboration Portal</p>
       </div>
     </div>
   );

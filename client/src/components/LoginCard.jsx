@@ -9,7 +9,7 @@ export default function LoginCard({ onNavigateRegister, onLoginSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -19,31 +19,17 @@ export default function LoginCard({ onNavigateRegister, onLoginSuccess }) {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      const result = login(identifier, password);
-      setIsLoading(false);
-      if (result.success) {
-        if (onLoginSuccess) onLoginSuccess(result.user);
-      } else {
-        setError(result.message || 'Invalid credentials');
-      }
-    }, 400);
-  };
-
-  const handleQuickDemo = () => {
-    setIdentifier('demo');
-    setPassword('password123');
-    setError('');
+    const result = await login(identifier, password);
+    setIsLoading(false);
+    if (result.success) {
+      if (onLoginSuccess) onLoginSuccess(result.user);
+    } else {
+      setError(result.message || 'Invalid credentials');
+    }
   };
 
   const handleSocialClick = (provider) => {
-    // Quick one-click simulated social login for seamless testing
-    setIsLoading(true);
-    setTimeout(() => {
-      login('alexmorgan', 'password123');
-      setIsLoading(false);
-      if (onLoginSuccess) onLoginSuccess();
-    }, 350);
+    setError(`${provider} single sign-on will connect via institutional / corporate SSO.`);
   };
 
   return (
@@ -184,12 +170,6 @@ export default function LoginCard({ onNavigateRegister, onLoginSuccess }) {
           </button>
         </form>
 
-        {/* Demo Fast Fill Pill */}
-        <div className="demo-hint-container">
-          <button type="button" className="demo-chip" onClick={handleQuickDemo}>
-            ⚡ Autofill demo credentials
-          </button>
-        </div>
 
         {/* Divider "— Or —" */}
         <div className="inspo-divider">

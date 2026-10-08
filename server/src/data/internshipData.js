@@ -1,0 +1,91 @@
+// Verified Industry Internship & Placement Opportunities
+// Directly connected to the Capstone Project Title:
+// "Portal for Academia-Industry Collaboration for Skill Mapping, Internships and Placement"
+
+export const INDUSTRY_OPPORTUNITIES = [
+  {
+    id: 'opp_fullstack_razorpay',
+    title: 'Full Stack Engineering Intern',
+    company: 'Razorpay Financial Cloud',
+    partnerType: 'FinTech Enterprise',
+    location: 'Bengaluru / Hybrid',
+    type: 'Internship (6 Months) + PPO',
+    stipend: '₹45,000 / month',
+    fullTimePackage: '₹14 - 18 LPA',
+    minCgpa: 7.5,
+    eligibleBatches: [2025, 2026, 2027],
+    targetRoleBenchmark: 'fullstack_mern',
+    requiredSkills: ['React.js', 'Node.js', 'Express.js', 'MongoDB (NoSQL)', 'RESTful API Design'],
+    preferredSkills: ['Docker & Containerization', 'TypeScript', 'Git & Version Control'],
+    deadline: '2026-11-15',
+    description: 'Collaborate with senior payment gateway engineers to build robust merchant checkout workflows and scalable microservices.'
+  },
+  {
+    id: 'opp_aiml_zomato',
+    title: 'Machine Learning / AI Associate Intern',
+    company: 'NeuralBytes AI Labs',
+    partnerType: 'AI & Data Tech Partner',
+    location: 'Gurugram / Onsite',
+    type: 'Summer Research Internship',
+    stipend: '₹50,000 / month',
+    fullTimePackage: '₹16 - 22 LPA',
+    minCgpa: 8.0,
+    eligibleBatches: [2025, 2026],
+    targetRoleBenchmark: 'ai_ml_engineer',
+    requiredSkills: ['Python', 'Machine Learning Fundamentals', 'Pandas & NumPy Data Analysis'],
+    preferredSkills: ['Deep Learning & Neural Networks', 'Natural Language Processing (NLP)', 'RESTful API Design'],
+    deadline: '2026-11-20',
+    description: 'Develop recommendation and demand-forecasting algorithms using PyTorch and scikit-learn on high-volume consumer telemetry data.'
+  },
+  {
+    id: 'opp_devops_cloudscale',
+    title: 'Cloud DevOps & SRE Intern',
+    company: 'CloudScale Infrastructure Solutions',
+    partnerType: 'Cloud Infrastructure Partner',
+    location: 'Remote / India',
+    type: 'Internship with Placement Offer',
+    stipend: '₹40,000 / month',
+    fullTimePackage: '₹12 - 16 LPA',
+    minCgpa: 7.0,
+    eligibleBatches: [2025, 2026],
+    targetRoleBenchmark: 'cloud_devops',
+    requiredSkills: ['Linux System Administration', 'Docker & Containerization', 'AWS Cloud Services'],
+    preferredSkills: ['CI/CD Pipelines & GitHub Actions', 'Kubernetes', 'Python'],
+    deadline: '2026-11-30',
+    description: 'Help automate infrastructure deployments, monitor containerized Kubernetes clusters, and build automated CI/CD test runners.'
+  },
+  {
+    id: 'opp_backend_cred',
+    title: 'Backend Systems Engineer - Campus Placement Drive',
+    company: 'FinVantage Systems',
+    partnerType: 'Enterprise Banking Partner',
+    location: 'Hyderabad / Hybrid',
+    type: 'Full-Time Campus Placement',
+    stipend: '₹55,000 / month (Internship)',
+    fullTimePackage: '₹15 - 20 LPA',
+    minCgpa: 7.5,
+    eligibleBatches: [2025, 2026],
+    targetRoleBenchmark: 'backend_engineer',
+    requiredSkills: ['Node.js', 'PostgreSQL (SQL)', 'RESTful API Design', 'Data Structures & Algorithms'],
+    preferredSkills: ['System Design & Architecture', 'Redis Caching', 'Docker & Containerization'],
+    deadline: '2026-12-05',
+    description: 'Engineer high-throughput transactional backends, implement distributed locks with Redis, and optimize complex relational database queries.'
+  },
+  {
+    id: 'opp_frontend_swiggy',
+    title: 'Frontend Experience Developer Intern',
+    company: 'HyperCart Digital',
+    partnerType: 'E-Commerce Industry Partner',
+    location: 'Remote / Hybrid',
+    type: 'Internship (3 Months)',
+    stipend: '₹35,000 / month',
+    fullTimePackage: '₹10 - 14 LPA',
+    minCgpa: 6.8,
+    eligibleBatches: [2025, 2026, 2027],
+    targetRoleBenchmark: 'fullstack_mern',
+    requiredSkills: ['React.js', 'JavaScript (ES6+)', 'HTML5 & CSS3'],
+    preferredSkills: ['TypeScript', 'Git & Version Control', 'Tailwind CSS'],
+    deadline: '2026-11-18',
+    description: 'Craft dynamic responsive UI features, optimize client render benchmarks, and implement stateful checkout interactions.'
+  }
+];

@@ -4,17 +4,21 @@ import TermsModal from './TermsModal';
 
 export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
   const { register } = useAuth();
+  const [role, setRole] = useState('student'); // 'student' | 'institution_tpo' | 'industry_recruiter'
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [institutionName, setInstitutionName] = useState('');
+  const [organizationName, setOrganizationName] = useState('');
+  const [department, setDepartment] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -40,15 +44,23 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      const result = register({ name, email, username, password });
-      setIsLoading(false);
-      if (result.success) {
-        if (onRegisterSuccess) onRegisterSuccess(result.user);
-      } else {
-        setError(result.message || 'Registration failed');
-      }
-    }, 450);
+    const result = await register({
+      name,
+      email,
+      username,
+      password,
+      role,
+      institutionName,
+      organizationName,
+      department
+    });
+    setIsLoading(false);
+
+    if (result.success) {
+      if (onRegisterSuccess) onRegisterSuccess(result.user);
+    } else {
+      setError(result.message || 'Registration failed');
+    }
   };
 
   return (
@@ -82,7 +94,44 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
       {/* Main Form Content */}
       <div className="signup-card-body">
         <div className="signup-header-section">
-          <h1 className="auth-title">Sign Up</h1>
+          <h1 className="auth-title">Create Account</h1>
+          <p className="auth-subtitle">Select your role to get started</p>
+        </div>
+
+        {/* Role Selector Segmented Controls */}
+        <div className="role-selector-container" role="radiogroup" aria-label="Portal Role">
+          <button
+            type="button"
+            className={`role-pill-btn ${role === 'student' ? 'selected' : ''}`}
+            onClick={() => setRole('student')}
+            role="radio"
+            aria-checked={role === 'student'}
+          >
+            <span className="role-icon">🎓</span>
+            <span className="role-text">Student</span>
+          </button>
+
+          <button
+            type="button"
+            className={`role-pill-btn ${role === 'institution_tpo' ? 'selected' : ''}`}
+            onClick={() => setRole('institution_tpo')}
+            role="radio"
+            aria-checked={role === 'institution_tpo'}
+          >
+            <span className="role-icon">🏛️</span>
+            <span className="role-text">College / TPO</span>
+          </button>
+
+          <button
+            type="button"
+            className={`role-pill-btn ${role === 'industry_recruiter' ? 'selected' : ''}`}
+            onClick={() => setRole('industry_recruiter')}
+            role="radio"
+            aria-checked={role === 'industry_recruiter'}
+          >
+            <span className="role-icon">💼</span>
+            <span className="role-text">Recruiter</span>
+          </button>
         </div>
 
         {error && (
@@ -99,7 +148,7 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
               id="signup-name"
               type="text"
               className="pill-input"
-              placeholder="Name"
+              placeholder={role === 'industry_recruiter' ? 'Full Name / HR Lead' : 'Full Name'}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -113,11 +162,61 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
               id="signup-email"
               type="email"
               className="pill-input"
-              placeholder="Email Id"
+              placeholder={
+                role === 'student'
+                  ? 'Student Email (e.g. .edu)'
+                  : role === 'industry_recruiter'
+                  ? 'Official Corporate Email'
+                  : 'Institutional / TPO Email'
+              }
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
+            />
+          </div>
+
+          {/* Role-Specific Affiliation Input */}
+          {role === 'industry_recruiter' ? (
+            <div className="pill-input-group">
+              <input
+                id="signup-org"
+                type="text"
+                className="pill-input"
+                placeholder="Company / Organization Name"
+                value={organizationName}
+                onChange={(e) => setOrganizationName(e.target.value)}
+                autoComplete="organization"
+              />
+            </div>
+          ) : (
+            <div className="pill-input-group">
+              <input
+                id="signup-institution"
+                type="text"
+                className="pill-input"
+                placeholder="College / University Name"
+                value={institutionName}
+                onChange={(e) => setInstitutionName(e.target.value)}
+              />
+            </div>
+          )}
+
+          {/* Department / Branch Input */}
+          <div className="pill-input-group">
+            <input
+              id="signup-department"
+              type="text"
+              className="pill-input"
+              placeholder={
+                role === 'student'
+                  ? 'Degree & Branch (e.g. B.Tech CSE)'
+                  : role === 'institution_tpo'
+                  ? 'Department (e.g. Placement Cell / CSE)'
+                  : 'Domain (e.g. Talent Acquisition / Tech)'
+              }
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
             />
           </div>
 
@@ -168,7 +267,7 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
             </button>
           </div>
 
-          {/* Terms & Condition Agreement with custom circular radio/checkbox */}
+          {/* Terms & Condition Agreement */}
           <div className="terms-row">
             <button
               type="button"
@@ -181,7 +280,7 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
               <span className="inner-dot" />
             </button>
             <label htmlFor="terms-checkbox" className="terms-label" onClick={() => setAgreeTerms(!agreeTerms)}>
-              I do agree with the{' '}
+              I agree with the{' '}
               <button
                 type="button"
                 className="terms-link-btn"
@@ -190,7 +289,7 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
                   setShowTermsModal(true);
                 }}
               >
-                Terms &amp; Contition
+                Terms &amp; Policies
               </button>
             </label>
           </div>
@@ -202,13 +301,13 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
             className="pill-submit-btn"
             disabled={isLoading}
           >
-            {isLoading ? <span className="spinner"></span> : 'Sign Up'}
+            {isLoading ? <span className="spinner"></span> : 'Register as ' + (role === 'student' ? 'Student' : role === 'institution_tpo' ? 'TPO' : 'Recruiter')}
           </button>
         </form>
 
-        {/* Footer Navigation Link: Already have an account ? Sign In */}
+        {/* Footer Navigation Link */}
         <div className="auth-footer-nav alt-nav">
-          <span className="footer-prompt">Already have an account ? </span>
+          <span className="footer-prompt">Already have an account? </span>
           <button
             type="button"
             className="footer-action-link"
@@ -259,8 +358,8 @@ export default function RegisterCard({ onNavigateLogin, onRegisterSuccess }) {
 
         {/* Inspirational Branding Typography in the Bottom Wave */}
         <div className="bottom-wave-branding">
-          <p className="branding-line-1">Experience Life</p>
-          <p className="branding-line-2">With a touch of Nature</p>
+          <p className="branding-line-1">Skill Mapping &amp; Placement</p>
+          <p className="branding-line-2">Academia-Industry Collaboration</p>
         </div>
       </div>
 
